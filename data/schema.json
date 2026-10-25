@@ -1,0 +1,35 @@
+{
+  "table": "sales_facts",
+  "date_column": "order_date",
+  "dimensions": {
+    "region": "Sales region",
+    "channel": "Sales channel",
+    "product_category": "Product category",
+    "product": "Individual product"
+  },
+  "hierarchies": {
+    "product": "product_category"
+  },
+  "metrics": {
+    "revenue": "revenue",
+    "gross_margin": "(revenue - cost)",
+    "units": "units"
+  },
+  "components": {
+    "revenue": "revenue",
+    "cost": "cost",
+    "units": "units"
+  },
+  "external": {
+    "fx_rates": {
+      "table": "fx_rates",
+      "date_column": "rate_date",
+      "base_column": "base_currency",
+      "quote_column": "quote_currency",
+      "value_column": "rate",
+      "base": "USD",
+      "quote": "CAD",
+      "label": "USD/CAD exchange rate"
+    }
+  }
+}

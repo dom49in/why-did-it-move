@@ -1,0 +1,278 @@
+{
+ "source": "engines/markovian/reference/src/configManager.ts (Meterless repo)",
+ "config": {
+  "chunkSize": 3000,
+  "maxChunks": 12,
+  "carryoverTokens": 256,
+  "overlapTokens": 0
+ },
+ "runs": [
+  {
+   "tokens": [
+    105,
+    87,
+    87,
+    159,
+    30,
+    118,
+    83
+   ],
+   "result": {
+    "totalTokensUsed": 669,
+    "standardCost": 2737,
+    "markovianCost": 2461,
+    "tokensSaved": 276,
+    "efficiencyPercent": 10.084033613445378
+   }
+  },
+  {
+   "tokens": [
+    500,
+    420,
+    610,
+    380,
+    450
+   ],
+   "result": {
+    "totalTokensUsed": 2360,
+    "standardCost": 7220,
+    "markovianCost": 3640,
+    "tokensSaved": 3580,
+    "efficiencyPercent": 49.584487534626035
+   }
+  },
+  {
+   "tokens": [
+    1200
+   ],
+   "result": {
+    "totalTokensUsed": 1200,
+    "standardCost": 1200,
+    "markovianCost": 1456,
+    "tokensSaved": 0,
+    "efficiencyPercent": 0
+   }
+  },
+  {
+   "tokens": [
+    300,
+    300,
+    300,
+    300,
+    300,
+    300,
+    300,
+    300
+   ],
+   "result": {
+    "totalTokensUsed": 2400,
+    "standardCost": 10800,
+    "markovianCost": 4448,
+    "tokensSaved": 6352,
+    "efficiencyPercent": 58.81481481481482
+   }
+  },
+  {
+   "tokens": [],
+   "result": {
+    "totalTokensUsed": 0,
+    "standardCost": 0,
+    "markovianCost": 0,
+    "tokensSaved": 0,
+    "efficiencyPercent": 0
+   }
+  },
+  {
+   "tokens": [
+    1,
+    1
+   ],
+   "result": {
+    "totalTokensUsed": 2,
+    "standardCost": 3,
+    "markovianCost": 514,
+    "tokensSaved": 0,
+    "efficiencyPercent": 0
+   }
+  },
+  {
+   "tokens": [
+    4000,
+    10,
+    4000
+   ],
+   "result": {
+    "totalTokensUsed": 8010,
+    "standardCost": 16020,
+    "markovianCost": 8778,
+    "tokensSaved": 7242,
+    "efficiencyPercent": 45.2059925093633
+   }
+  }
+ ],
+ "model": [
+  {
+   "n": 1,
+   "result": {
+    "naiveTotal": 900,
+    "markovianTotal": 1700,
+    "savings": -800,
+    "efficiency": -0.8888888888888888
+   }
+  },
+  {
+   "n": 2,
+   "result": {
+    "naiveTotal": 3000,
+    "markovianTotal": 3400,
+    "savings": -400,
+    "efficiency": -0.13333333333333333
+   }
+  },
+  {
+   "n": 5,
+   "result": {
+    "naiveTotal": 16500,
+    "markovianTotal": 8500,
+    "savings": 8000,
+    "efficiency": 0.48484848484848486
+   }
+  },
+  {
+   "n": 10,
+   "result": {
+    "naiveTotal": 63000,
+    "markovianTotal": 17000,
+    "savings": 46000,
+    "efficiency": 0.7301587301587301
+   }
+  },
+  {
+   "n": 20,
+   "result": {
+    "naiveTotal": 246000,
+    "markovianTotal": 34000,
+    "savings": 212000,
+    "efficiency": 0.8617886178861789
+   }
+  },
+  {
+   "n": 32,
+   "result": {
+    "naiveTotal": 624000,
+    "markovianTotal": 54400,
+    "savings": 569600,
+    "efficiency": 0.9128205128205128
+   }
+  }
+ ],
+ "projection": [
+  {
+   "step": 1,
+   "standard": 3000,
+   "markovian": 3256
+  },
+  {
+   "step": 2,
+   "standard": 6000,
+   "markovian": 3256
+  },
+  {
+   "step": 3,
+   "standard": 9000,
+   "markovian": 3256
+  },
+  {
+   "step": 4,
+   "standard": 12000,
+   "markovian": 3256
+  },
+  {
+   "step": 5,
+   "standard": 15000,
+   "markovian": 3256
+  },
+  {
+   "step": 6,
+   "standard": 18000,
+   "markovian": 3256
+  }
+ ],
+ "validation": [
+  {
+   "partial": {
+    "chunkSize": 999
+   },
+   "ok": false
+  },
+  {
+   "partial": {
+    "chunkSize": 128001
+   },
+   "ok": false
+  },
+  {
+   "partial": {
+    "maxChunks": 0
+   },
+   "ok": false
+  },
+  {
+   "partial": {
+    "maxChunks": 33
+   },
+   "ok": false
+  },
+  {
+   "partial": {
+    "carryoverTokens": 127
+   },
+   "ok": false
+  },
+  {
+   "partial": {
+    "carryoverTokens": 32769
+   },
+   "ok": false
+  },
+  {
+   "partial": {
+    "overlapTokens": -1
+   },
+   "ok": false
+  },
+  {
+   "partial": {
+    "overlapTokens": 4097
+   },
+   "ok": false
+  },
+  {
+   "partial": {
+    "chunkSize": 1856,
+    "carryoverTokens": 256
+   },
+   "ok": true
+  },
+  {
+   "partial": {
+    "chunkSize": 1855,
+    "carryoverTokens": 256
+   },
+   "ok": false
+  },
+  {
+   "partial": {
+    "carryoverTokens": 0
+   },
+   "ok": false
+  },
+  {
+   "partial": {
+    "chunkSize": 1000,
+    "carryoverTokens": 128
+   },
+   "ok": false
+  }
+ ]
+}

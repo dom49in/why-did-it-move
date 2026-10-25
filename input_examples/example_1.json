@@ -1,0 +1,5 @@
+{
+  "request_id": "example-001",
+  "user_query": "Why did gross margin fall in September versus August?",
+  "context": {"track": "The Agent That Can Explain Why"}
+}

@@ -1,0 +1,5 @@
+{
+  "request_id": "example-004",
+  "user_query": "Why did gross margin fall in September compared to August?",
+  "context": {"note": "Reworded repeat of example 1; run after it with the same MEMORY_DIR to see H-MEM recall and feedback."}
+}

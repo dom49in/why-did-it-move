@@ -1,0 +1,446 @@
+{
+  "request_id": "example-002",
+  "trace_id": "trace-20261024-345f4c1b",
+  "status": "success",
+  "agents_used": [
+    "PlannerAgent",
+    "ExecutorAgent",
+    "EvaluatorAgent"
+  ],
+  "result": {
+    "metric": "revenue",
+    "base_period": "2026-07",
+    "compare_period": "2026-08",
+    "total_change": {
+      "base": 1715741.22,
+      "compare": 1733192.23,
+      "delta": 17451.01,
+      "pct": 1.02
+    },
+    "summary": "Revenue rose by 17,451.01 (1.02%), from 1,715,741.22 in 2026-07 to 1,733,192.23 in 2026-08. The change is concentrated in region=Quebec (141%, lift 5.09x). Within region=Quebec, product_category=Apparel holds 45% of that scope's change. For region=Quebec the largest effect is volume (24,077.69). The USD/CAD exchange rate averaged 1.3311 in the base month and 1.3289 in the compare month (-0.17%). That is too small to explain the change. No concentrated driver was found by channel, product.",
+    "claims": [
+      {
+        "finding_id": "f1",
+        "statement": "region=Quebec rose by 24,540.02, which is 141% of the total change (lift 5.09x: it moved faster than its size predicts). Mechanism: volume effect 24,077.69 (positive), price effect 462.33 (positive) (unit cost changed 0.9%; average price changed 0.09%; units changed 5.08%)."
+      },
+      {
+        "finding_id": "f2",
+        "statement": "product_category=Apparel within region=Quebec rose by 10,959.74, which is 63% of the total change and 45% of its scope (lift 1.59x: it moved faster than its size predicts). Mechanism: volume effect 10,652.19 (positive), price effect 307.55 (positive) (unit cost changed 0.58%; average price changed 0.21%; units changed 8.0%)."
+      }
+    ],
+    "findings": [
+      {
+        "id": "f1",
+        "level": 0,
+        "dimension": "region",
+        "member": "Quebec",
+        "scope": "all data",
+        "base_value": 473625.79,
+        "compare_value": 498165.81,
+        "delta": 24540.02,
+        "share_of_scope_change": 1.40622,
+        "share_of_total_change": 1.40622,
+        "lift_vs_base_share": 5.09,
+        "mechanism": {
+          "revenue": {
+            "base": 473625.79,
+            "compare": 498165.81,
+            "delta": 24540.02
+          },
+          "cost": {
+            "base": 286093.51,
+            "compare": 303358.39,
+            "delta": 17264.88
+          },
+          "units": {
+            "base": 3226.0,
+            "compare": 3390.0,
+            "delta": 164.0
+          },
+          "units_change_pct": 5.08,
+          "avg_price_change_pct": 0.09,
+          "unit_cost_change_pct": 0.9,
+          "effects": {
+            "volume": 24077.69,
+            "price": 462.33
+          }
+        },
+        "sources": [
+          "q2",
+          "q9"
+        ]
+      },
+      {
+        "id": "f2",
+        "level": 1,
+        "dimension": "product_category",
+        "member": "Apparel",
+        "scope": "region=Quebec",
+        "base_value": 133215.05,
+        "compare_value": 144174.79,
+        "delta": 10959.74,
+        "share_of_scope_change": 0.44661,
+        "share_of_total_change": 0.62803,
+        "lift_vs_base_share": 1.59,
+        "mechanism": {
+          "revenue": {
+            "base": 133215.05,
+            "compare": 144174.79,
+            "delta": 10959.74
+          },
+          "cost": {
+            "base": 72250.84,
+            "compare": 78478.62,
+            "delta": 6227.78
+          },
+          "units": {
+            "base": 1063.0,
+            "compare": 1148.0,
+            "delta": 85.0
+          },
+          "units_change_pct": 8.0,
+          "avg_price_change_pct": 0.21,
+          "unit_cost_change_pct": 0.58,
+          "effects": {
+            "volume": 10652.19,
+            "price": 307.55
+          }
+        },
+        "sources": [
+          "q7",
+          "q10"
+        ]
+      }
+    ],
+    "ruled_out": [
+      {
+        "dimension": "channel",
+        "scope": "region=Quebec",
+        "why": "proportional: 'Retail' holds 42% of the change but its size alone predicts that (lift 1.22)"
+      },
+      {
+        "dimension": "product",
+        "scope": "region=Quebec",
+        "why": "diffuse: largest same-direction member 'Air Purifier' holds 37% of the scope change"
+      }
+    ],
+    "coverage": 1.406,
+    "confidence": 0.95,
+    "caveats": [
+      "The decomposition shows which segments moved and by how much; it cannot identify business causes (pricing, campaigns, supply) that are not in the data."
+    ],
+    "memory": {
+      "recalled": [],
+      "retrieval_trace": {
+        "retrievalReason": "no memory scored >= 0.25 out of 6",
+        "strategy": "none",
+        "threshold": 0.25,
+        "scored": 6,
+        "returned": []
+      },
+      "feedback_applied": [],
+      "stored": [
+        "mem-c898d0e8d4",
+        "mem-2692dd71a2",
+        "mem-986663d617",
+        "mem-b637762747"
+      ]
+    },
+    "evidence": [
+      {
+        "query_id": "q0",
+        "kind": "range",
+        "sql": "SELECT MIN(order_date) AS min_date, MAX(order_date) AS max_date FROM sales_facts",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q1",
+        "kind": "total",
+        "sql": "SELECT SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN revenue ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-07-01' AND order_date < '2026-08-01') OR (order_date >= '2026-08-01' AND order_date < '2026-09-01'))",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q2",
+        "kind": "breakdown",
+        "sql": "SELECT region AS member, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN revenue ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-07-01' AND order_date < '2026-08-01') OR (order_date >= '2026-08-01' AND order_date < '2026-09-01')) GROUP BY region",
+        "rows_returned": 4,
+        "source": "sample_data",
+        "dimension": "region",
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q3",
+        "kind": "breakdown",
+        "sql": "SELECT channel AS member, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN revenue ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-07-01' AND order_date < '2026-08-01') OR (order_date >= '2026-08-01' AND order_date < '2026-09-01')) GROUP BY channel",
+        "rows_returned": 3,
+        "source": "sample_data",
+        "dimension": "channel",
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q4",
+        "kind": "breakdown",
+        "sql": "SELECT product_category AS member, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN revenue ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-07-01' AND order_date < '2026-08-01') OR (order_date >= '2026-08-01' AND order_date < '2026-09-01')) GROUP BY product_category",
+        "rows_returned": 3,
+        "source": "sample_data",
+        "dimension": "product_category",
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q5",
+        "kind": "breakdown",
+        "sql": "SELECT product AS member, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN revenue ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-07-01' AND order_date < '2026-08-01') OR (order_date >= '2026-08-01' AND order_date < '2026-09-01')) GROUP BY product",
+        "rows_returned": 6,
+        "source": "sample_data",
+        "dimension": "product",
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q6",
+        "kind": "breakdown",
+        "sql": "SELECT channel AS member, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN revenue ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-07-01' AND order_date < '2026-08-01') OR (order_date >= '2026-08-01' AND order_date < '2026-09-01')) AND region = 'Quebec' GROUP BY channel",
+        "rows_returned": 3,
+        "source": "sample_data",
+        "dimension": "channel",
+        "scope": [
+          {
+            "dimension": "region",
+            "member": "Quebec"
+          }
+        ],
+        "truncated": false
+      },
+      {
+        "query_id": "q7",
+        "kind": "breakdown",
+        "sql": "SELECT product_category AS member, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN revenue ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-07-01' AND order_date < '2026-08-01') OR (order_date >= '2026-08-01' AND order_date < '2026-09-01')) AND region = 'Quebec' GROUP BY product_category",
+        "rows_returned": 3,
+        "source": "sample_data",
+        "dimension": "product_category",
+        "scope": [
+          {
+            "dimension": "region",
+            "member": "Quebec"
+          }
+        ],
+        "truncated": false
+      },
+      {
+        "query_id": "q8",
+        "kind": "breakdown",
+        "sql": "SELECT product AS member, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN revenue ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-07-01' AND order_date < '2026-08-01') OR (order_date >= '2026-08-01' AND order_date < '2026-09-01')) AND region = 'Quebec' GROUP BY product",
+        "rows_returned": 6,
+        "source": "sample_data",
+        "dimension": "product",
+        "scope": [
+          {
+            "dimension": "region",
+            "member": "Quebec"
+          }
+        ],
+        "truncated": false
+      },
+      {
+        "query_id": "q9",
+        "kind": "mechanism",
+        "sql": "SELECT SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN revenue ELSE 0 END) AS revenue_base, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS revenue_compare, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN cost ELSE 0 END) AS cost_base, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN cost ELSE 0 END) AS cost_compare, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN units ELSE 0 END) AS units_base, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN units ELSE 0 END) AS units_compare FROM sales_facts WHERE ((order_date >= '2026-07-01' AND order_date < '2026-08-01') OR (order_date >= '2026-08-01' AND order_date < '2026-09-01')) AND region = 'Quebec'",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [
+          {
+            "dimension": "region",
+            "member": "Quebec"
+          }
+        ],
+        "truncated": false
+      },
+      {
+        "query_id": "q10",
+        "kind": "mechanism",
+        "sql": "SELECT SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN revenue ELSE 0 END) AS revenue_base, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS revenue_compare, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN cost ELSE 0 END) AS cost_base, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN cost ELSE 0 END) AS cost_compare, SUM(CASE WHEN (order_date >= '2026-07-01' AND order_date < '2026-08-01') THEN units ELSE 0 END) AS units_base, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN units ELSE 0 END) AS units_compare FROM sales_facts WHERE ((order_date >= '2026-07-01' AND order_date < '2026-08-01') OR (order_date >= '2026-08-01' AND order_date < '2026-09-01')) AND region = 'Quebec' AND product_category = 'Apparel'",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [
+          {
+            "dimension": "region",
+            "member": "Quebec"
+          },
+          {
+            "dimension": "product_category",
+            "member": "Apparel"
+          }
+        ],
+        "truncated": false
+      },
+      {
+        "query_id": "q11",
+        "kind": "external",
+        "sql": "SELECT AVG(CASE WHEN (rate_date >= '2026-07-01' AND rate_date < '2026-08-01') THEN rate END) AS base_value, AVG(CASE WHEN (rate_date >= '2026-08-01' AND rate_date < '2026-09-01') THEN rate END) AS compare_value, SUM(CASE WHEN (rate_date >= '2026-07-01' AND rate_date < '2026-08-01') THEN 1 ELSE 0 END) AS base_n, SUM(CASE WHEN (rate_date >= '2026-08-01' AND rate_date < '2026-09-01') THEN 1 ELSE 0 END) AS compare_n FROM fx_rates WHERE ((rate_date >= '2026-07-01' AND rate_date < '2026-08-01') OR (rate_date >= '2026-08-01' AND rate_date < '2026-09-01')) AND base_currency = 'USD' AND quote_currency = 'CAD'",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [],
+        "truncated": false
+      }
+    ],
+    "external_context": {
+      "series": "USD/CAD exchange rate",
+      "observations_base": 20,
+      "observations_compare": 20,
+      "base_average": 1.3311,
+      "compare_average": 1.3289,
+      "change_pct": -0.17,
+      "verdict": "flat",
+      "statement": "The USD/CAD exchange rate averaged 1.3311 in the base month and 1.3289 in the compare month (-0.17%). That is too small to explain the change.",
+      "query_id": "q11"
+    }
+  },
+  "collaboration": {
+    "feedback_loop_completed": true,
+    "evaluator_reviews": 1,
+    "critiques_issued": 0,
+    "revision_count": 0,
+    "evaluator_findings": [],
+    "unresolved_issues": [],
+    "final_checks": {
+      "numbers_recomputed": true,
+      "sums_reconcile": true,
+      "mechanism_adds_up": true,
+      "external_recomputed": true,
+      "not_truncated": true,
+      "numbers_grounded": true,
+      "directions_consistent": true,
+      "all_findings_cited": true,
+      "coverage": 1.406,
+      "model_critic_flags": 0
+    }
+  },
+  "engines": {
+    "markovian": {
+      "name": "markovian",
+      "implementation": "python, spec-aligned (see app/engines/markovian.py); TS conformance not run",
+      "chunk_config": {
+        "chunk_size": 3000,
+        "max_chunks": 12,
+        "carryover_tokens": 256,
+        "overlap_tokens": 0
+      },
+      "steps": 9,
+      "prompt_chars_per_step": [
+        1621,
+        2221,
+        2151,
+        2315,
+        2590,
+        2221,
+        2252,
+        2322,
+        2670
+      ],
+      "max_prompt_chars": 2670,
+      "carryover_cascade_levels": [
+        "explicit",
+        "explicit",
+        "explicit",
+        "explicit",
+        "explicit",
+        "explicit",
+        "explicit",
+        "explicit",
+        "explicit"
+      ],
+      "carryover_tokens_per_step": [
+        141,
+        149,
+        160,
+        173,
+        181,
+        149,
+        178,
+        191,
+        227
+      ],
+      "chunk_tokens": [
+        106,
+        85,
+        87,
+        154,
+        30,
+        85,
+        87,
+        149,
+        32
+      ],
+      "efficiency": {
+        "total_tokens_used": 815,
+        "standard_cost": 4248,
+        "markovian_cost": 3119,
+        "tokens_saved": 1129,
+        "efficiency_percent": 26.577212806026367
+      },
+      "efficiency_using_actual_carryover": {
+        "markovian_cost": 2364,
+        "tokens_saved": 1884,
+        "efficiency_percent": 44.35028248587571
+      },
+      "token_label": "estimated",
+      "measured_prompt_tokens_per_step": null,
+      "action_fallbacks": 0,
+      "note": "efficiency uses spec 6.3: standard cost replays every prior chunk; Markovian cost is steps x carryover_tokens + tokens used. It can be 0 for short chains.",
+      "run": {
+        "id": "43bc639c-1df2-4abd-923e-04b71b083b6e",
+        "status": "completed",
+        "totalTokensUsed": 815,
+        "totalTokensSaved": 1129,
+        "efficiencyPercent": 26.58,
+        "durationMs": 27
+      },
+      "cumulative": {
+        "totalRuns": 2,
+        "completedRuns": 2,
+        "totalTokensUsed": 1484,
+        "totalTokensSaved": 1405,
+        "averageEfficiency": 18.33,
+        "totalChunksProcessed": 16,
+        "lastRunTimestamp": 1792875437198,
+        "efficiencyHistory": [
+          {
+            "timestamp": 1792875436989,
+            "efficiency": 10.08,
+            "tokensSaved": 276
+          },
+          {
+            "timestamp": 1792875437198,
+            "efficiency": 26.58,
+            "tokensSaved": 1129
+          }
+        ]
+      }
+    },
+    "h_mem": {
+      "recalled": 0,
+      "feedback": [],
+      "stored": 4
+    }
+  },
+  "models_used": [
+    "offline-rules"
+  ],
+  "reasoning_mode": "offline_rules",
+  "data_source": "sample_data",
+  "log_path": "output_examples/logs/trace-20261024-345f4c1b.jsonl"
+}

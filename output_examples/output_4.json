@@ -1,0 +1,562 @@
+{
+  "request_id": "example-004",
+  "trace_id": "trace-20261024-5516ae73",
+  "status": "success",
+  "agents_used": [
+    "PlannerAgent",
+    "ExecutorAgent",
+    "EvaluatorAgent"
+  ],
+  "result": {
+    "metric": "gross_margin",
+    "base_period": "2026-08",
+    "compare_period": "2026-09",
+    "total_change": {
+      "base": 676566.2,
+      "compare": 619872.9,
+      "delta": -56693.3,
+      "pct": -8.38
+    },
+    "summary": "Gross margin fell by 56,693.30 (-8.38%), from 676,566.20 in 2026-08 to 619,872.90 in 2026-09. The change is concentrated in product=Rain Jacket (58%, lift 3.03x). Other contributors moved roughly in line with their size: product=Air Purifier (20%), product=Coffee Maker (9%). For product=Rain Jacket the largest effect is unit cost (28,198.38). The USD/CAD exchange rate averaged 1.3289 in the base month and 1.333 in the compare month (+0.31%). That is too small to explain the change. No concentrated driver was found by channel, region.",
+    "claims": [
+      {
+        "finding_id": "f1",
+        "statement": "product=Rain Jacket fell by 33,017.43, which is 58% of the total change (lift 3.03x: it moved faster than its size predicts). Mechanism: volume effect 4,345.85 (negative), price effect 473.20 (negative), unit cost effect 28,198.38 (negative) (unit cost changed 19.97%; average price changed -0.18%; units changed -3.34%)."
+      },
+      {
+        "finding_id": "f2",
+        "statement": "product=Air Purifier fell by 11,480.77, which is 20% of the total change (lift 0.87x: roughly in line with its size). Mechanism: volume effect 7,536.32 (negative), price effect 195.10 (positive), unit cost effect 4,139.55 (negative) (unit cost changed 1.36%; average price changed 0.04%; units changed -4.77%)."
+      },
+      {
+        "finding_id": "f3",
+        "statement": "product=Coffee Maker fell by 5,171.45, which is 9% of the total change (lift 0.64x: roughly in line with its size). Mechanism: volume effect 1,958.85 (negative), price effect 707.83 (negative), unit cost effect 2,504.77 (negative) (unit cost changed 1.84%; average price changed -0.31%; units changed -2.03%)."
+      }
+    ],
+    "findings": [
+      {
+        "id": "f1",
+        "level": 0,
+        "dimension": "product",
+        "member": "Rain Jacket",
+        "scope": "all data",
+        "base_value": 130046.27,
+        "compare_value": 97028.84,
+        "delta": -33017.43,
+        "share_of_scope_change": 0.58239,
+        "share_of_total_change": 0.58239,
+        "lift_vs_base_share": 3.03,
+        "mechanism": {
+          "revenue": {
+            "base": 276166.88,
+            "compare": 266464.81,
+            "delta": -9702.07
+          },
+          "cost": {
+            "base": 146120.61,
+            "compare": 169435.97,
+            "delta": 23315.36
+          },
+          "units": {
+            "base": 1975.0,
+            "compare": 1909.0,
+            "delta": -66.0
+          },
+          "units_change_pct": -3.34,
+          "avg_price_change_pct": -0.18,
+          "unit_cost_change_pct": 19.97,
+          "effects": {
+            "volume": -4345.85,
+            "price": -473.2,
+            "unit_cost": -28198.38
+          }
+        },
+        "sources": [
+          "q2",
+          "q8"
+        ]
+      },
+      {
+        "id": "f2",
+        "level": 0,
+        "dimension": "product",
+        "member": "Air Purifier",
+        "scope": "all data",
+        "base_value": 158024.69,
+        "compare_value": 146543.92,
+        "delta": -11480.77,
+        "share_of_scope_change": 0.20251,
+        "share_of_total_change": 0.20251,
+        "lift_vs_base_share": 0.87,
+        "mechanism": {
+          "revenue": {
+            "base": 478620.69,
+            "compare": 455990.0,
+            "delta": -22630.69
+          },
+          "cost": {
+            "base": 320596.0,
+            "compare": 309446.08,
+            "delta": -11149.92
+          },
+          "units": {
+            "base": 1992.0,
+            "compare": 1897.0,
+            "delta": -95.0
+          },
+          "units_change_pct": -4.77,
+          "avg_price_change_pct": 0.04,
+          "unit_cost_change_pct": 1.36,
+          "effects": {
+            "volume": -7536.32,
+            "price": 195.1,
+            "unit_cost": -4139.55
+          }
+        },
+        "sources": [
+          "q2",
+          "q10"
+        ]
+      },
+      {
+        "id": "f3",
+        "level": 0,
+        "dimension": "product",
+        "member": "Coffee Maker",
+        "scope": "all data",
+        "base_value": 96375.46,
+        "compare_value": 91204.01,
+        "delta": -5171.45,
+        "share_of_scope_change": 0.09122,
+        "share_of_total_change": 0.09122,
+        "lift_vs_base_share": 0.64,
+        "mechanism": {
+          "revenue": {
+            "base": 235703.84,
+            "compare": 230205.28,
+            "delta": -5498.56
+          },
+          "cost": {
+            "base": 139328.38,
+            "compare": 139001.27,
+            "delta": -327.11
+          },
+          "units": {
+            "base": 1968.0,
+            "compare": 1928.0,
+            "delta": -40.0
+          },
+          "units_change_pct": -2.03,
+          "avg_price_change_pct": -0.31,
+          "unit_cost_change_pct": 1.84,
+          "effects": {
+            "volume": -1958.85,
+            "price": -707.83,
+            "unit_cost": -2504.77
+          }
+        },
+        "sources": [
+          "q2",
+          "q11"
+        ]
+      }
+    ],
+    "ruled_out": [
+      {
+        "dimension": "channel",
+        "scope": "(all)",
+        "why": "proportional: 'Online' holds 42% of the change but its size alone predicts that (lift 0.94)"
+      },
+      {
+        "dimension": "channel",
+        "scope": "product=Rain Jacket",
+        "why": "proportional: 'Online' holds 44% of the change but its size alone predicts that (lift 0.96)"
+      },
+      {
+        "dimension": "region",
+        "scope": "product=Rain Jacket",
+        "why": "diffuse: largest same-direction member 'Quebec' holds 40% of the scope change"
+      }
+    ],
+    "coverage": 0.876,
+    "confidence": 0.89,
+    "caveats": [
+      "The decomposition shows which segments moved and by how much; it cannot identify business causes (pricing, campaigns, supply) that are not in the data."
+    ],
+    "memory": {
+      "recalled": [
+        {
+          "id": "mem-296ab71ec7",
+          "score": 0.2908,
+          "content": "Why gross margin changed in September 2026 versus August 2026 (2026-08->2026-09): product=Rain Jacket accounted for 58% of the change (delta -33,017.43); dominant mechanism: unit cost effect."
+        },
+        {
+          "id": "mem-3472b23c4c",
+          "score": 0.2569,
+          "content": "Why gross margin changed in September 2026 versus August 2026 (2026-08->2026-09): dimension channel (scope (all)) was ruled out as a driver (proportional: 'Online' holds 42% of the change but its size alone predicts that )."
+        },
+        {
+          "id": "mem-e53959303b",
+          "score": 0.2532,
+          "content": "Why gross margin changed in September 2026 versus August 2026 (2026-08->2026-09): dimension region (scope product=Rain Jacket) was ruled out as a driver (diffuse: largest same-direction member 'Quebec' holds 40% of the scope change)."
+        }
+      ],
+      "retrieval_trace": {
+        "retrievalReason": "3 of 16 memories scored >= 0.25 (hybrid formula, confidence-weighted)",
+        "strategy": "comprehensive",
+        "threshold": 0.25,
+        "scored": 16,
+        "returned": [
+          {
+            "id": "mem-296ab71ec7",
+            "score": 0.2908
+          },
+          {
+            "id": "mem-3472b23c4c",
+            "score": 0.2569
+          },
+          {
+            "id": "mem-e53959303b",
+            "score": 0.2532
+          }
+        ]
+      },
+      "feedback_applied": [
+        {
+          "memory_id": "mem-296ab71ec7",
+          "signal": "helpful",
+          "confidence": 0.85
+        },
+        {
+          "memory_id": "mem-3472b23c4c",
+          "signal": "helpful",
+          "confidence": 0.75
+        },
+        {
+          "memory_id": "mem-e53959303b",
+          "signal": "helpful",
+          "confidence": 0.75
+        }
+      ],
+      "stored": [
+        "mem-60e5ca5d29",
+        "mem-ccd695d93e",
+        "mem-ce982e5d04",
+        "mem-a5736e5479",
+        "mem-8f6f308938",
+        "mem-14d7d8ff10"
+      ]
+    },
+    "evidence": [
+      {
+        "query_id": "q0",
+        "kind": "range",
+        "sql": "SELECT MIN(order_date) AS min_date, MAX(order_date) AS max_date FROM sales_facts",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q1",
+        "kind": "total",
+        "sql": "SELECT SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN (revenue - cost) ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN (revenue - cost) ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-08-01' AND order_date < '2026-09-01') OR (order_date >= '2026-09-01' AND order_date < '2026-10-01'))",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q2",
+        "kind": "breakdown",
+        "sql": "SELECT product AS member, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN (revenue - cost) ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN (revenue - cost) ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-08-01' AND order_date < '2026-09-01') OR (order_date >= '2026-09-01' AND order_date < '2026-10-01')) GROUP BY product",
+        "rows_returned": 6,
+        "source": "sample_data",
+        "dimension": "product",
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q3",
+        "kind": "breakdown",
+        "sql": "SELECT product_category AS member, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN (revenue - cost) ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN (revenue - cost) ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-08-01' AND order_date < '2026-09-01') OR (order_date >= '2026-09-01' AND order_date < '2026-10-01')) GROUP BY product_category",
+        "rows_returned": 3,
+        "source": "sample_data",
+        "dimension": "product_category",
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q4",
+        "kind": "breakdown",
+        "sql": "SELECT channel AS member, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN (revenue - cost) ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN (revenue - cost) ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-08-01' AND order_date < '2026-09-01') OR (order_date >= '2026-09-01' AND order_date < '2026-10-01')) GROUP BY channel",
+        "rows_returned": 3,
+        "source": "sample_data",
+        "dimension": "channel",
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q5",
+        "kind": "breakdown",
+        "sql": "SELECT region AS member, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN (revenue - cost) ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN (revenue - cost) ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-08-01' AND order_date < '2026-09-01') OR (order_date >= '2026-09-01' AND order_date < '2026-10-01')) GROUP BY region",
+        "rows_returned": 4,
+        "source": "sample_data",
+        "dimension": "region",
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q6",
+        "kind": "breakdown",
+        "sql": "SELECT channel AS member, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN (revenue - cost) ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN (revenue - cost) ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-08-01' AND order_date < '2026-09-01') OR (order_date >= '2026-09-01' AND order_date < '2026-10-01')) AND product = 'Rain Jacket' GROUP BY channel",
+        "rows_returned": 3,
+        "source": "sample_data",
+        "dimension": "channel",
+        "scope": [
+          {
+            "dimension": "product",
+            "member": "Rain Jacket"
+          }
+        ],
+        "truncated": false
+      },
+      {
+        "query_id": "q7",
+        "kind": "breakdown",
+        "sql": "SELECT region AS member, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN (revenue - cost) ELSE 0 END) AS base_value, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN (revenue - cost) ELSE 0 END) AS compare_value FROM sales_facts WHERE ((order_date >= '2026-08-01' AND order_date < '2026-09-01') OR (order_date >= '2026-09-01' AND order_date < '2026-10-01')) AND product = 'Rain Jacket' GROUP BY region",
+        "rows_returned": 4,
+        "source": "sample_data",
+        "dimension": "region",
+        "scope": [
+          {
+            "dimension": "product",
+            "member": "Rain Jacket"
+          }
+        ],
+        "truncated": false
+      },
+      {
+        "query_id": "q8",
+        "kind": "mechanism",
+        "sql": "SELECT SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS revenue_base, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN revenue ELSE 0 END) AS revenue_compare, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN cost ELSE 0 END) AS cost_base, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN cost ELSE 0 END) AS cost_compare, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN units ELSE 0 END) AS units_base, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN units ELSE 0 END) AS units_compare FROM sales_facts WHERE ((order_date >= '2026-08-01' AND order_date < '2026-09-01') OR (order_date >= '2026-09-01' AND order_date < '2026-10-01')) AND product = 'Rain Jacket'",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [
+          {
+            "dimension": "product",
+            "member": "Rain Jacket"
+          }
+        ],
+        "truncated": false
+      },
+      {
+        "query_id": "q9",
+        "kind": "external",
+        "sql": "SELECT AVG(CASE WHEN (rate_date >= '2026-08-01' AND rate_date < '2026-09-01') THEN rate END) AS base_value, AVG(CASE WHEN (rate_date >= '2026-09-01' AND rate_date < '2026-10-01') THEN rate END) AS compare_value, SUM(CASE WHEN (rate_date >= '2026-08-01' AND rate_date < '2026-09-01') THEN 1 ELSE 0 END) AS base_n, SUM(CASE WHEN (rate_date >= '2026-09-01' AND rate_date < '2026-10-01') THEN 1 ELSE 0 END) AS compare_n FROM fx_rates WHERE ((rate_date >= '2026-08-01' AND rate_date < '2026-09-01') OR (rate_date >= '2026-09-01' AND rate_date < '2026-10-01')) AND base_currency = 'USD' AND quote_currency = 'CAD'",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [],
+        "truncated": false
+      },
+      {
+        "query_id": "q10",
+        "kind": "mechanism",
+        "sql": "SELECT SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS revenue_base, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN revenue ELSE 0 END) AS revenue_compare, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN cost ELSE 0 END) AS cost_base, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN cost ELSE 0 END) AS cost_compare, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN units ELSE 0 END) AS units_base, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN units ELSE 0 END) AS units_compare FROM sales_facts WHERE ((order_date >= '2026-08-01' AND order_date < '2026-09-01') OR (order_date >= '2026-09-01' AND order_date < '2026-10-01')) AND product = 'Air Purifier'",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [
+          {
+            "dimension": "product",
+            "member": "Air Purifier"
+          }
+        ],
+        "truncated": false
+      },
+      {
+        "query_id": "q11",
+        "kind": "mechanism",
+        "sql": "SELECT SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN revenue ELSE 0 END) AS revenue_base, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN revenue ELSE 0 END) AS revenue_compare, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN cost ELSE 0 END) AS cost_base, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN cost ELSE 0 END) AS cost_compare, SUM(CASE WHEN (order_date >= '2026-08-01' AND order_date < '2026-09-01') THEN units ELSE 0 END) AS units_base, SUM(CASE WHEN (order_date >= '2026-09-01' AND order_date < '2026-10-01') THEN units ELSE 0 END) AS units_compare FROM sales_facts WHERE ((order_date >= '2026-08-01' AND order_date < '2026-09-01') OR (order_date >= '2026-09-01' AND order_date < '2026-10-01')) AND product = 'Coffee Maker'",
+        "rows_returned": 1,
+        "source": "sample_data",
+        "dimension": null,
+        "scope": [
+          {
+            "dimension": "product",
+            "member": "Coffee Maker"
+          }
+        ],
+        "truncated": false
+      }
+    ],
+    "external_context": {
+      "series": "USD/CAD exchange rate",
+      "observations_base": 20,
+      "observations_compare": 20,
+      "base_average": 1.3289,
+      "compare_average": 1.333,
+      "change_pct": 0.31,
+      "verdict": "flat",
+      "statement": "The USD/CAD exchange rate averaged 1.3289 in the base month and 1.333 in the compare month (+0.31%). That is too small to explain the change.",
+      "query_id": "q9"
+    }
+  },
+  "collaboration": {
+    "feedback_loop_completed": true,
+    "evaluator_reviews": 2,
+    "critiques_issued": 1,
+    "revision_count": 1,
+    "evaluator_findings": [
+      "Cited drivers explain only 58% of the total change; add the next-largest contributors."
+    ],
+    "unresolved_issues": [],
+    "final_checks": {
+      "numbers_recomputed": true,
+      "sums_reconcile": true,
+      "mechanism_adds_up": true,
+      "external_recomputed": true,
+      "not_truncated": true,
+      "numbers_grounded": true,
+      "directions_consistent": true,
+      "all_findings_cited": true,
+      "coverage": 0.876,
+      "model_critic_flags": 0
+    }
+  },
+  "engines": {
+    "markovian": {
+      "name": "markovian",
+      "implementation": "python, spec-aligned (see app/engines/markovian.py); TS conformance not run",
+      "chunk_config": {
+        "chunk_size": 3000,
+        "max_chunks": 12,
+        "carryover_tokens": 256,
+        "overlap_tokens": 0
+      },
+      "steps": 7,
+      "prompt_chars_per_step": [
+        1668,
+        2403,
+        2202,
+        2305,
+        2473,
+        2486,
+        2406
+      ],
+      "max_prompt_chars": 2486,
+      "carryover_cascade_levels": [
+        "explicit",
+        "explicit",
+        "explicit",
+        "explicit",
+        "explicit",
+        "explicit",
+        "explicit"
+      ],
+      "carryover_tokens_per_step": [
+        154,
+        162,
+        170,
+        200,
+        212,
+        183,
+        216
+      ],
+      "chunk_tokens": [
+        159,
+        87,
+        87,
+        105,
+        30,
+        83,
+        118
+      ],
+      "efficiency": {
+        "total_tokens_used": 669,
+        "standard_cost": 2864,
+        "markovian_cost": 2461,
+        "tokens_saved": 403,
+        "efficiency_percent": 14.07122905027933
+      },
+      "efficiency_using_actual_carryover": {
+        "markovian_cost": 1966,
+        "tokens_saved": 898,
+        "efficiency_percent": 31.354748603351958
+      },
+      "token_label": "estimated",
+      "measured_prompt_tokens_per_step": null,
+      "action_fallbacks": 0,
+      "note": "efficiency uses spec 6.3: standard cost replays every prior chunk; Markovian cost is steps x carryover_tokens + tokens used. It can be 0 for short chains.",
+      "run": {
+        "id": "1ad1c5b1-4cc3-41b9-b183-8c42dfc3e747",
+        "status": "completed",
+        "totalTokensUsed": 669,
+        "totalTokensSaved": 403,
+        "efficiencyPercent": 14.07,
+        "durationMs": 42
+      },
+      "cumulative": {
+        "totalRuns": 4,
+        "completedRuns": 4,
+        "totalTokensUsed": 2922,
+        "totalTokensSaved": 2743,
+        "averageEfficiency": 18.515,
+        "totalChunksProcessed": 32,
+        "lastRunTimestamp": 1792875437667,
+        "efficiencyHistory": [
+          {
+            "timestamp": 1792875436989,
+            "efficiency": 10.08,
+            "tokensSaved": 276
+          },
+          {
+            "timestamp": 1792875437198,
+            "efficiency": 26.58,
+            "tokensSaved": 1129
+          },
+          {
+            "timestamp": 1792875437424,
+            "efficiency": 23.33,
+            "tokensSaved": 935
+          },
+          {
+            "timestamp": 1792875437667,
+            "efficiency": 14.07,
+            "tokensSaved": 403
+          }
+        ]
+      }
+    },
+    "h_mem": {
+      "recalled": 3,
+      "feedback": [
+        {
+          "memory_id": "mem-296ab71ec7",
+          "signal": "helpful",
+          "confidence": 0.85
+        },
+        {
+          "memory_id": "mem-3472b23c4c",
+          "signal": "helpful",
+          "confidence": 0.75
+        },
+        {
+          "memory_id": "mem-e53959303b",
+          "signal": "helpful",
+          "confidence": 0.75
+        }
+      ],
+      "stored": 6
+    }
+  },
+  "models_used": [
+    "offline-rules"
+  ],
+  "reasoning_mode": "offline_rules",
+  "data_source": "sample_data",
+  "log_path": "output_examples/logs/trace-20261024-5516ae73.jsonl"
+}

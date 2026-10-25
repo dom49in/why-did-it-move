@@ -1,0 +1,5 @@
+{
+  "request_id": "example-003",
+  "user_query": "Explain why units sold changed in September compared to August.",
+  "context": {"track": "The Agent That Can Explain Why"}
+}

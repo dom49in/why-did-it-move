@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Why did it move?</title>
+<style>
+:root{--bg:#F5F3EC;--fg:#121A2B;--mut:#4A5568;--card:#fff;--line:#DAD6C8;--acc:#B7791F;--ok:#2F855A;--bad:#C53030}
+@media(prefers-color-scheme:dark){:root{--bg:#121A2B;--fg:#F5F3EC;--mut:#A9B3C5;--card:#1B2740;--line:#2c3a57;--acc:#F2B134;--ok:#68D391;--bad:#FC8181}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 64px}h1{margin:0 0 4px;font-size:28px}
+.sub{color:var(--mut);margin:0 0 20px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}
+form{display:flex;gap:8px;flex-wrap:wrap}input{flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--fg);font:inherit}
+button{padding:10px 16px;border:0;border-radius:8px;background:var(--acc);color:#121A2B;font-weight:700;cursor:pointer}button:disabled{opacity:.5}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chip{background:none;border:1px solid var(--line);color:var(--mut);font-weight:400;font-size:13px}
+h2{font-size:15px;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)}
+.big{font-size:20px}.bar{height:10px;background:var(--line);border-radius:5px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
+.row{display:flex;justify-content:space-between;gap:12px;margin:6px 0;flex-wrap:wrap}.tag{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line)}
+.ok{color:var(--ok)}.bad{color:var(--bad)}small,.mut{color:var(--mut)}ul{margin:6px 0;padding-left:20px}
+.banner{border-left:4px solid var(--acc);padding:8px 12px;margin:12px 0;background:var(--card);border-radius:4px;font-size:14px}
+</style></head><body><main>
+<h1>Why did it move?</h1>
+<p class="sub">Ask why a metric changed. Every number is queried and re-checked; the model never writes SQL.</p>
+<form id="f"><input id="q" aria-label="Question" value="Why did gross margin fall in September compared to August?"><button id="go">Explain</button></form>
+<div class="chips" id="chips"></div>
+<div id="mode" class="banner" hidden></div>
+<div id="out" aria-live="polite"></div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n).toLocaleString(undefined,{maximumFractionDigits:2});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+["Why did gross margin fall in September compared to August?","Why did revenue change in September compared to August?","What drove the change in units sold in September versus August?"].forEach(t=>{
+ const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=t;b.onclick=()=>{$("q").value=t;$("f").requestSubmit()};$("chips").append(b)});
+fetch("/health").then(r=>r.json()).then(h=>{if(h.sample_mode){$("mode").hidden=false;$("mode").textContent="Sample mode: synthetic data, and reasoning comes from offline rules, not a live model. Not a live run."}}).catch(()=>{});
+$("f").onsubmit=async e=>{e.preventDefault();$("go").disabled=true;$("out").innerHTML='<p class="mut">Investigating…</p>';
+ try{const r=await fetch("/run",{method:"POST",body:JSON.stringify({request_id:"ui-"+Date.now(),user_query:$("q").value,context:{}})});
+  render(await r.json())}catch(x){$("out").innerHTML='<div class="card bad">Request failed.</div>'}$("go").disabled=false};
+function render(d){
+ if(d.status!=="success"){const e=d.error||{};$("out").innerHTML=`<div class="card"><h2>Could not answer</h2><p class="bad">${esc(e.message||"Unknown error")}</p><small>${esc(e.type||"")} ${esc(e.stage||"")}</small></div>`;return}
+ const r=d.result,c=d.collaboration,t=r.total_change;
+ let h=`<div class="card"><h2>Answer</h2><p class="big">${esc(r.summary)}</p>
+ <div class="row"><span>${esc(r.base_period)}: <b>${fmt(t.base)}</b></span><span>${esc(r.compare_period)}: <b>${fmt(t.compare)}</b></span><span>Change: <b>${fmt(t.delta)} (${t.pct}%)</b></span></div>
+ <div class="row"><small>Coverage of the change explained</small><small>${Math.round(r.coverage*100)}%</small></div><div class="bar"><i style="width:${Math.min(100,r.coverage*100)}%"></i></div></div>`;
+ h+=`<div class="card"><h2>Drivers</h2>`;
+ r.findings.forEach(f=>{const m=f.mechanism&&f.mechanism.effects;
+  h+=`<div class="row"><b>${esc(f.dimension)} = ${esc(f.member)}</b><span>${fmt(f.delta)} · ${Math.round(f.share_of_total_change*100)}% of change · lift ${f.lift_vs_base_share}x</span></div>`;
+  if(m)h+=`<small>Volume ${fmt(m.volume)} · price ${fmt(m.price)} · unit cost ${fmt(m.unit_cost)} (exact identity)</small>`});
+ if(!r.findings.length)h+='<p class="mut">No concentrated driver found.</p>';
+ h+=`</div>`;
+ if(r.ruled_out&&r.ruled_out.length)h+=`<div class="card"><h2>Ruled out</h2><ul>${r.ruled_out.map(x=>`<li>${esc(x.dimension)} (${esc(x.scope)}): ${esc(x.why)}</li>`).join("")}</ul></div>`;
+ if(r.external_context)h+=`<div class="card"><h2>Outside context (web API via Zetaris)</h2><p>${esc(r.external_context.statement)}</p><small>Context only; not a cause.</small></div>`;
+ const chk=c.final_checks||{};
+ h+=`<div class="card"><h2>Independent check</h2><p>Planner → Executor → Evaluator. ${c.critiques_issued} critique(s), ${c.revision_count} revision(s); ${c.unresolved_issues.length} unresolved.</p>
+ <div>${Object.entries(chk).map(([k,v])=>typeof v==="boolean"?`<span class="tag ${v?"ok":"bad"}">${v?"✓":"✗"} ${esc(k.replace(/_/g," "))}</span>`:`<span class="tag">${esc(k.replace(/_/g," "))}: ${esc(v)}</span>`).join(" ")}</div></div>`;
+ h+=`<div class="card"><h2>Caveats</h2><ul>${r.caveats.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+ <small>Confidence ${r.confidence} · data: ${esc(d.data_source)} · models: ${esc((d.models_used||[]).join(", "))} · trace ${esc(d.trace_id)}</small></div>`;
+ $("out").innerHTML=h}
+</script></body></html>
