@@ -3,10 +3,11 @@
 Track: **The Agent That Can Explain Why** · Open Agent Hackathon 2026 · Solo builder
 
 > **Status (25 Oct).** Live runs are done: examples 1, 2 and 4 ran against real Zetaris, Nightshift and NVIDIA Nemotron
-> (`output_examples/live/`, JSON plus trace). What is left is yours to do before submitting:
-> 1. **Make the repo public** and push without `.env`, `.memory` or `logs/` (the submission form needs the URL).
-> 2. **Upload the demo video** (1-4 minutes) and **finish the deck** (fill the repository URL placeholder on the last slide).
-> 3. **Fill in the HackOS form**: description, track (Track 2), the sponsor technology explanation (§3) and the
+> (`output_examples/live/`, JSON plus trace). The code is pushed to https://github.com/dom49in/why-did-it-move.
+> What is left before submitting:
+> 1. **Confirm the repo is public** (open it in a private browser window) and that `.env`, `.memory` and `logs/` are not in it.
+> 2. **Upload the demo video** (1-4 minutes, final cut 3:40) and **the slide deck** (12 slides, speaker notes included).
+> 3. **Fill in the HackOS form**: description (§8), track (Track 2), the sponsor technology explanation (§3) and the
 >    pre-existing components declaration (§4). Submit before **27 Oct 23:45 UTC** (7:45 PM Toronto), hard deadline.
 > Dates confirmed from the Official Rules on HackOS: build window 22 Oct 00:00 to 27 Oct 23:45 UTC. Judging criteria:
 > Impact 30, Technical 20, Innovation 15, Demo 15, Product & UX 10, Sponsor Tech 10.
@@ -17,8 +18,8 @@ Track: **The Agent That Can Explain Why** · Open Agent Hackathon 2026 · Solo b
 cp .env.example .env     # set SAMPLE_MODE=false and fill: ZETARIS_REST_URL, ZETARIS_ORG_ID, ZETARIS_API_KEY,
                          #   ZETARIS_TABLE, METERLESS_BASE_URL, METERLESS_RUNTIME_TOKEN
 # (NVIDIA key: Nightshift -> Providers tab ONLY. Never in .env.)
-# Also run scripts/zetaris_register_fx_rates.sql in Zetaris (second source: public web API) and set ZETARIS_FX_TABLE.
-# Load the data into Zetaris first: README, "Load the data into Zetaris (step by step)" (scripts/generated/zetaris_setup_all.sql).
+# ZETARIS_TABLE=sales.sales_facts and ZETARIS_FX_TABLE=sales.fx_rates_table (keep the `sales.` prefix).
+# Load the data into Zetaris first: README, "Load the data into Zetaris (step by step)" (scripts/zetaris_setup_all.sql).
 python run.py --input input_examples/example_1.json --output /tmp/live.json
 python - <<'EOF'
 import json; d = json.load(open("/tmp/live.json"))
@@ -47,7 +48,7 @@ Commit nothing from `.env`.
 | requirements.txt, .env.example, README.md | ✅ | repo root; `.env.example` has blank secrets (tested) |
 | ≥3 input examples, ≥3 real output examples | ✅ (sample-mode) | `input_examples/` ×4, `output_examples/` ×4 with traces; produced by `run.py`, checked against the CSV. Live: `output_examples/live/` has examples 1, 2 and 4 (`example_N_live.json` + `example_N_live_trace.jsonl`; traces `f0cf84f6`, `e85e897a`, `b244ab77`). |
 | No real .env / keys committed | ✅ | `tests/test_hygiene.py` scans for key shapes; `.gitignore` covers `.env` |
-| Repository is public | ☐ | you |
+| Repository is public | ✅ pushed, ☐ confirm public | https://github.com/dom49in/why-did-it-move (open in a private window to confirm) |
 | Zetaris is the data layer, real role | ✅ verified live | every number is a SQL result via `app/adapters/zetaris.py`; both live runs show `"source": "zetaris"` on all 12 queries, incl. the public FX web API registered as a Zetaris REST table |
 | ≥1 Meterless Engine in a working feature, with a test | ✅ | Markovian (control loop) + H-MEM (memory loop); `tests/test_markovian.py`, `tests/test_hmem.py`. Python ports, **TS conformance not run** |
 | Nightshift is the primary AI provider | ✅ verified live | all model calls in `app/llm.py` → `{METERLESS_BASE_URL}/chat/completions`, `meterless/auto`; live traces show `reasoning: nightshift` and 12 model steps per run |
@@ -61,14 +62,14 @@ Commit nothing from `.env`.
 | Sample mode works without Zetaris, Nightshift, credentials | ✅ | quick start; Docker `-e SAMPLE_MODE=true` (Docker itself **not built here**) |
 | Docker build/run documented | ✅ docs / ☐ built | `Dockerfile`; run `docker build` once |
 | Demo video 1-4 min | ✅ built, ☐ upload | 3:40, follows the deck flow and labels examples 1, 2 and 4; upload to HackOS |
-| Slide deck | ✅ built, ☐ placeholder | 12 slides with speaker notes (Slides artifact); fill `[repository URL]` on the last slide |
+| Slide deck | ✅ built | 12 slides with speaker notes (Slides artifact); repository URL on the last slide |
 | Sponsor technology explanation | ✅ | §3 |
 | Pre-existing components declared | ✅ | §4 (**confirm the line about the starting scaffold**) |
 
 ## 3. Sponsor technology explanation
 
-**Zetaris: the data layer.** Every figure in an answer is the result of a SQL statement sent to Zetaris'
-`/sql-editor/sqls/run` endpoint (bearer token, `X-Org-ID`, per-call `X-Request-ID`). The agent needs *live aggregation*
+**Zetaris: the data layer.** Every figure in an answer is the result of a SQL statement sent to Zetaris
+through its SQL endpoint (REST API or the UI proxy route, chosen by config; API key and org id). The agent needs *live aggregation*
 (totals and breakdowns by dimension, in scope, per period), which is precisely what a SQL layer over the company's
 tables provides; a "why" agent that works from a pasted CSV cannot be pointed at the real business. SQL is built from a
 whitelisted schema, escaped, and rejected unless it is one `SELECT` (the model never writes SQL). Row caps are
@@ -90,7 +91,8 @@ Memory is advisory only: numbers always come from fresh queries, and a stale mem
 
 **Meterless Nightshift: the model provider.** Planner hypotheses, step decisions, draft explanations and a model critic
 pass go through Nightshift (`meterless/auto`) using only the Runtime token. `response.model` is recorded in every log
-line and in `models_used`, which is how NVIDIA contribution is shown rather than asserted. The NVIDIA key lives in
+line and in `models_used`, which is how NVIDIA contribution is shown rather than asserted. In the live runs `models_used` is
+`["nvidia/nemotron-3.5-lightning-30b-a3b"]` and `reasoning_mode` is `nightshift`. The NVIDIA key lives in
 Nightshift's Providers tab, never in this app.
 
 **Not used:** World Model, Scout Intent.
@@ -111,10 +113,13 @@ Nightshift's Providers tab, never in this app.
 * **Open-source libraries:** Python standard library, `uvicorn`, `requests`.
 * **Data:** `data/sample/sales_facts.csv` is synthetic, generated by `scripts/make_sample_data.py` with a fixed seed; it
   contains deliberately seeded shocks (e.g. a Rain Jacket cost shock in September) so findings can be checked.
-* **Starting scaffold:** a partial project already existed in the working directory when this session began
-  (`app/config.py`, `errors.py`, `sqlguard.py`, `sample_store.py`, `tracing.py`, `scripts/make_sample_data.py`, the CSV).
-  Those files were kept; everything else (agents, pipeline, both engines, analysis, offline rules, adapters, API,
-  tests, docs) was written or rewritten in this session. **Confirm and edit this line to state who wrote that scaffold and when.**
+* **Starting scaffold and prepared data:** the project began from the Meterless agentathon starter, and a partial project
+  already existed in the working directory when this session began (`app/config.py`, `errors.py`, `sqlguard.py`,
+  `sample_store.py`, `tracing.py`, `scripts/make_sample_data.py`, the CSV). Those files were kept; everything else
+  (agents, pipeline, both engines, analysis, offline rules, adapters, API, tests, docs, the live-run evidence) was written
+  or rewritten during the build window. The sales data loaded into Zetaris comes from that CSV via
+  `scripts/zetaris_setup_all.sql`. **Confirm and edit this bullet to state who wrote the scaffold and the data, and when,
+  before pasting it into the form.**
 * **AI assistance:** developed with Claude Code (vibe coding is permitted by the guide). All code is run and tested; none
   of it is copied model output that was not executed.
 * Cursor was not used.
